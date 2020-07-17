@@ -1,0 +1,31 @@
+// This program implements a Covid lookup service
+// over TCP or Unix Data Socket. It loads CSV Covid Dataset
+// information using package lib (see above) and uses a simple
+// text-based protocol to interact with the client and send
+// the data.
+//
+// Clients send covid dataset search requests as a textual command in the form:
+//
+// > nc localhost 4040
+// > {"query": {"region": "Sindh"}}
+// > {"query": {"date": "4/4/2020"}}
+// for query It's mendatory to follow the given JSOn Structure as it is given above.
+//
+// When the server receives the request, it is parsed and is then used
+// to search the list of covid Dataset. The search result is then printed
+// JSON Format dataset to the client.
+//
+// Focus:
+// This version of the server uses TCP sockets (or UDS) to implement a simple
+// text-based application-level protocol. There are no streaming strategy
+// employed for the read/write operations. Buffers are read in one shot
+// creating opportunities for missing data during read.
+//
+// Testing:
+// Netcat or telnet can be used to test this server by connecting and
+// sending command using the format described above.
+//
+// Usage: server [options]
+// options:
+//   -e host endpoint, default ":4040"
+//   -n network protocol [tcp,unix], default "tcp"
